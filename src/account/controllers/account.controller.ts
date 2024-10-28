@@ -2,27 +2,22 @@ import {
   Controller,
   Get,
   InternalServerErrorException,
-  NotFoundException,
-  Query
+  NotFoundException
 } from "@nestjs/common";
-import { ApiHeader, ApiTags } from "@nestjs/swagger";
-import { UrlService } from "../services";
-import { ApiSecurity } from "@/auth";
-import { QueryDto, UrlDto } from "../dto";
+import { ApiTags } from "@nestjs/swagger";
+import { Authenticated } from "@/auth";
 import { CUSTOM_ERROR_CODE } from "@/common";
+import { AccountService } from "../services";
+import { Account } from "@/entity";
 
 @ApiTags("Urls")
-@ApiHeader({
-  name: "X-API-KEY"
-})
-@ApiSecurity()
-@Controller("urls")
-export class UrlController {
-  constructor(private urlService: UrlService) {}
+@Authenticated()
+@Controller("accounts")
+export class AccountController {
+  constructor(private accountService: AccountService) {}
 
-  @Get()
-  async findAll(@Query() query: QueryDto): Promise<UrlDto[]> {
-    const { priority = undefined } = query;
+  @Get("profile")
+  async getProfile(@CurrentUser() account: Account): Promise<Partial<Account>> {
     let result;
     try {
       result = await this.urlService.findAll(priority);

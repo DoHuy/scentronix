@@ -11,7 +11,7 @@ services:
     - data-volume:/data/db
     environment:
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: assessments-db
+      POSTGRES_DB: astrology-db
     networks:
     - postgres
 volumes:

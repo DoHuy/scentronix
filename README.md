@@ -1,8 +1,4 @@
-# Assignment Project
-
-## Description
-
-This project is based on [Nest](https://github.com/nestjs/nest) framework TypeScript repository. (Required Node version 14.18.1)
+# Astrology API Project
 
 ## Installation
 
@@ -28,7 +24,7 @@ npm run typeorm migration:run
 
 - Host name/address: postgres
 - port: 5432
-- maintenance database: assessments-db
+- maintenance database: astrology-db
 - username: postgres
 - password: postgres
 

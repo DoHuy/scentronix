@@ -12,6 +12,10 @@ export const REQUEST_ERROR = {
 };
 
 export const AUTH_ERROR_MESSAGE = {
-  API_KEY_MISSING: "API key is missing.",
-  API_KEY_INVALID: "Invalid API key."
+  INCORRECT_MISSING: "Email or password incorrect",
+  NOTFOUND: 'Account not found'
+};
+
+export const SYSTEM_ERROR_MESSAGE = {
+  INTERNAL_ERROR: "Internal error"
 };

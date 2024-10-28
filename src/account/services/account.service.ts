@@ -1,17 +1,16 @@
-import { InputRepository } from "@/repository";
+import { AccountRepository } from "@/repository";
 import { Injectable, Logger } from "@nestjs/common";
 import { keyBy, orderBy } from "lodash";
-import { UrlDto } from "../dto";
 import { CUSTOM_ERROR_CODE, REQUEST_ERROR, URL_ERROR_MESSAGE } from "@/common";
 import axios, { AxiosError } from "axios";
-import { UrlInterface } from "@/urls";
+import { AccountInterface } from "@/account";
 
 @Injectable()
-export class UrlService implements UrlInterface {
+export class AccountService implements AccountInterface {
   private readonly timeout = 5000; // Timeout in milliseconds
 
   constructor(
-    private inputRepository: InputRepository,
+    private accountRepository: AccountRepository,
     private readonly logger: Logger
   ) {}
 

@@ -7,7 +7,7 @@ import { AppService } from "./app.service";
 import { DatabaseModule } from "./database";
 import { RepositoryModule } from "./repository";
 import { TimeoutMiddleware } from "./common";
-import { UrlModule } from "./urls";
+import { AccountModule } from "./account";
 
 @Module({
   imports: [
@@ -24,7 +24,7 @@ import { UrlModule } from "./urls";
     }),
     DatabaseModule,
     RepositoryModule,
-    UrlModule
+    AccountModule
   ],
   controllers: [AppController],
   providers: [

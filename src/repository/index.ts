@@ -1,2 +1,2 @@
-export * from "./input.repository";
+export * from "./account.repository";
 export * from "./repository.module";

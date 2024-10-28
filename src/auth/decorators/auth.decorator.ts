@@ -1,7 +1,19 @@
-import { applyDecorators, UseGuards } from "@nestjs/common";
+import {
+  applyDecorators,
+  createParamDecorator,
+  ExecutionContext,
+  UseGuards
+} from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
+import { AccessTokenPayloadData } from "../dto";
 
-import { ApiKeyGuard } from "@/auth";
-
-export function ApiSecurity(): any {
-  return applyDecorators(UseGuards(ApiKeyGuard));
+export function Authenticated(): any {
+  return applyDecorators(UseGuards(AuthGuard("jwt")));
 }
+
+export const CurrentUser = createParamDecorator((ctx: ExecutionContext) => {
+  const request = ctx.switchToHttp().getRequest<{
+    account: AccessTokenPayloadData
+  }>();
+  return request.account;
+});

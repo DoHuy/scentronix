@@ -1,1 +1,1 @@
-export * from "./input.entity";
+export * from "./account.entity";

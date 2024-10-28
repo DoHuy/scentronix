@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { UrlService } from "@/urls";
-import { UrlController } from "./url.controller";
+import { accountService } from "@/urls";
+import { UrlController } from "./account.controller";
 import { orderBy } from "lodash";
 import {
   InternalServerErrorException,
@@ -8,13 +8,13 @@ import {
 } from "@nestjs/common";
 import * as faker from "faker";
 import { CUSTOM_ERROR_CODE, URL_ERROR_MESSAGE } from "@/common";
-import { UrlInterface } from "@/urls";
+import { AccountInterface } from "@/urls";
 
-describe("Url Controller", () => {
+describe("Account Controller", () => {
   let controller: UrlController;
-  let urlService: UrlInterface;
+  let accountService: UrlInterface;
 
-  const mockUrlService = () => ({
+  const mockAccountService = () => ({
     findAll: jest.fn()
   });
 
@@ -47,16 +47,16 @@ describe("Url Controller", () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UrlController],
       providers: [
-        UrlService,
+        accountService,
         {
-          provide: UrlService,
-          useValue: mockUrlService()
+          provide: accountService,
+          useValue: mockAccountService()
         }
       ]
     }).compile();
 
-    controller = module.get<UrlController>(UrlController);
-    urlService = module.get<UrlService>(UrlService);
+    controller = module.get<AccountController>(AccountController);
+    accountService = module.get<AccountService>(AccountService);
   });
 
   it("should be defined", async () => {
@@ -65,7 +65,7 @@ describe("Url Controller", () => {
 
   describe("findAll not contain priority", () => {
     it("return data", async () => {
-      urlService.findAll = jest.fn(
+      accountService.findAll = jest.fn(
         async () =>
           new Promise(resolve =>
             resolve(orderBy(mockData, ["priority"], ["asc"]))
@@ -76,7 +76,7 @@ describe("Url Controller", () => {
     });
 
     it("not found", async () => {
-      urlService.findAll = jest.fn().mockImplementation(() => {
+      accountService.findAll = jest.fn().mockImplementation(() => {
         throw new Error(
           `${CUSTOM_ERROR_CODE.NOTFOUND}|${URL_ERROR_MESSAGE.NOTFOUND}`
         );
@@ -91,7 +91,7 @@ describe("Url Controller", () => {
 
     describe("findAll contain priority", () => {
       it("return data", async () => {
-        urlService.findAll = jest.fn(
+        accountService.findAll = jest.fn(
           () => new Promise(resolve => resolve([mockData[0]]))
         );
         const result = await controller.findAll({ priority: 1 });
@@ -99,7 +99,7 @@ describe("Url Controller", () => {
       });
 
       it("not found", async () => {
-        urlService.findAll = jest.fn().mockImplementation(() => {
+        accountService.findAll = jest.fn().mockImplementation(() => {
           throw new Error(
             `${CUSTOM_ERROR_CODE.NOTFOUND}|${URL_ERROR_MESSAGE.NOTFOUND}`
           );
@@ -113,7 +113,7 @@ describe("Url Controller", () => {
       });
 
       it("internal server error", async () => {
-        urlService.findAll = jest.fn().mockImplementation(() => {
+        accountService.findAll = jest.fn().mockImplementation(() => {
           throw new Error("database timeout");
         });
 
